@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.I.M. | Accurate Items Mapping</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
+  body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('cart-background.jpg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    background-repeat: no-repeat;
+  }
+
+  .header-container {
+    padding: 60px 20px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .banner-title {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 85px; 
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+    line-height: 1.1;
+  }
+
+  .banner-subtitle {
+    display: block;
+    font-size: 30px; 
+    font-weight: 700; 
+    color: #4da6ff; 
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+    margin-top: 5px;
+  }
+
+  .search-container { 
+    max-width: 800px; 
+    margin: 0 auto; 
+    position: relative; 
+    z-index: 1;
+  }
+
+  input[type="text"].search-bar { 
+    width: 100%; 
+    padding: 18px; 
+    font-size: 16px; 
+    border: 3px solid #ee4d2d; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  }
+  input[type="text"].search-bar:focus {
+    box-shadow: 0 0 12px rgba(238, 77, 45, 0.9);
+  }
+
+  .results-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+    gap: 15px; 
+    max-width: 1000px; 
+    margin: 0 auto 40px; 
+    padding: 0 20px;
+  }
+  .item-card { 
+    background: white; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 6px; 
+    padding: 15px; 
+    text-align: center; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    transition: transform 0.2s; 
+    position: relative;
+  }
+  .item-card:hover { 
+    transform: translateY(-5px); 
+    border-color: #ee4d2d; 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  }
+  .item-image { 
+    width: 100%; 
+    height: 150px; 
+    object-fit: contain; 
+    margin-bottom: 10px; 
+    background-color: #fafafa; 
+    border-radius: 4px;
+  }
+  
+  .badge-alt {
+    background-color: #ff9800;
+    color: white;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .item-code { 
+    font-size: 12px; 
+    color: #888; 
+    margin-bottom: 5px; 
+  }
+  .item-desc { 
+    font-size: 13px; 
+    font-weight: bold; 
+    color: #333; 
+    margin-bottom: 10px; 
+    height: 45px; 
+    overflow: hidden; 
+  }
+  .item-uom { 
+    font-size: 13px; 
+    color: #ee4d2d; 
+    font-weight: bold; 
+  }
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 10000; 
+    padding-top: 50px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.85); 
+  }
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 70vh;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  #modalCaption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    text-align: center;
+    color: white;
+    padding: 15px 0;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .modal-item-code {
+    font-size: 22px;
+    color: #ee4d2d;
+    font-weight: bold;
+  }
+  .modal-alt-item {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    color: #ffd54f;
+    font-size: 16px;
+  }
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .close-btn:hover,
+  .close-btn:focus {
+    color: #ee4d2d;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="mainApp">
+  <div class="header-container">
+    <h1 class="banner-title">
+      A.I.M.
+      <span class="banner-subtitle">Accurate Items Mapping</span>
+    </h1>
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Search by item code or description (e.g., Atropine or 42964311)...">
+    </div>
+  </div>
+
+  <div class="results-grid" id="resultsContainer"></div>
+</div>
+
+<div id="imageModal" class="modal">
+  <span class="close-btn" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="expandedImg">
+  <div id="modalCaption"></div>
+</div>
+
+<script>
+  // --- INVENTORY DATABASE ---
+  const inventory = [
+    // --- PRIMARY ITEMS ---
+    { code: "42964311", desc: "ATROPINE (HIZON) 1 MG/1 ML AMP", uom: "AMP", alt: "Alternative: ATROPINE SULFATE (CIRON) (Code: 42800076)" },
+    { code: "44000038", desc: "SOD. BICARBONATE 8.4%(ATLANTIC) 50ML", uom: "AMP", alt: "Alternative: SODIUM BICARBONATE 8.4% 100ML (Code: 44010000)" },
+    { code: "48840022", desc: "CALCIUM GLUCONATE (EURO-MED) 10%", uom: "VL", alt: "Alternative: CA. GLUCONATE 10% 10ML (Code: 48840009)" },
+    { code: "43817013", desc: "LIDOCAINE 2% (ELIN) 1,000 MG/50 ML (20 MG/ML) VIAL (HAM)", uom: "VL", alt: "Alternative: XYLOCAINE 2% POLYAMP (Code: 43817011)" },
+    { code: "42870004", desc: "DORMICUM 5 MG/1 ML AMP (HAM)", uom: "AMP", alt: "Alternative: MIDAZOLAM (ENLIFE) 5MG/ML (Code: 42800071)" },
+    { code: "42851614", desc: "VaLIUM 10 MG/2 ML (5 MG/ML) AMP (HAM)", uom: "AMP", alt: "Alternative: ANXIOL 10MG/2ML (Code: 42800059)" },
+    { code: "80200008", desc: "AIRWAY NASAL SIZE 7.0 FR. 28", uom: "PC", alt: "Alternatives: RESPISENZ (80200055) or TAPPA (80200065)" },
+    { code: "80200010", desc: "AIRWAY NASAL SIZE 7.5 FR. 30", uom: "PC", alt: "Alternatives: RESPISENZ (80200059) or TAPPA (80200066)" },
+    { code: "80200006", desc: "AIRWAY NASAL SIZE 6.0 FR. 24", uom: "PC", alt: "Alternatives: TAPPA (80200063) or SHILEY (80200060)" },
+    { code: "86000143", desc: "ENDO TUBE STANDARD SIZE 2.0", uom: "PC", alt: "Alternatives: SEDASENZ (80200069) or UNCUFFED RUSCH (86001129)" },
+    { code: "86000051", desc: "ENDO TUBE STANDARD SIZE 2.5", uom: "PC", alt: "Alternatives: SEDASENZ (80200070) or UNCUFFED RUSCH (86001130)" },
+    { code: "86000144", desc: "ENDO TUBE STANDARD SIZE 3.0", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001116), UNCUFFED SEDASENZ (80200071), or UNCUFFED RUSCH (86001131)" },
+    { code: "86000042", desc: "ENDO TUBE STANDARD SIZE 4.0", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001118), UNCUFFED SEDASENZ (80200073), or UNCUFFED RUSCH (86001133)" },
+    { code: "86001033", desc: "ENDO TUBE STANDARD SIZE 4.5", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001119), UNCUFFED SEDASENZ (80200074), or UNCUFFED RUSCH (86001134)" },
+    { code: "86000091", desc: "ENDO TUBE STANDARD SIZE 5.0", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001120) or UNCUFFED RUSCH (86001135)" },
+    { code: "86001028", desc: "ENDO TUBE STANDARD SIZE 5.5", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001121) or UNCUFFED RUSCH (86001136)" },
+    { code: "86000027", desc: "ENDO TUBE STANDARD SIZE 6.0", uom: "PC", alt: "Alternative: ENDO TUBE 6.0 W/ CUFF RUSCH (Code: 86001122)" },
+    { code: "86000145", desc: "ENDO TUBE STANDARD SIZE 6.5", uom: "PC", alt: "Alternative: ENDO TUBE 6.5 W/ CUFF RUSCH (Code: 86001123)" },
+    { code: "86000028", desc: "ENDO TUBE STANDARD SIZE 7.0", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001124) or CUFF SEDASENZ (86001163)" },
+    { code: "86000147", desc: "ENDO TUBE STANDARD SIZE 7.5", uom: "PC", alt: "Alternatives: CUFF RUSCH (86001125) or CUFF SEDASENZ (86001164)" },
+    { code: "85701003", desc: "SYRINGE 10CC W/ NEEDLE LUER LOCK", uom: "PC", alt: "Alternative: SYRINGE 10CC W/ NEEDLE LUER LOCK, NIPRO (Code: 85701078)" },
+    { code: "85701002", desc: "SYRINGE 5CC W/ NEEDLE LUER LOCK", uom: "PC", alt: "Alternative: SYRINGE 5CC W/ NEEDLE LL G23, NIPRO (Code: 85701076)" },
+    { code: "48459921", desc: "BD ALCOHOL SWAB 70% ALCOHOL WIPES 100'S", uom: "PC", alt: "Alternative: UNI-WIPE ALCOHOL SWAB (Code: 48459936)" },
+    { code: "83300013", desc: "EXTENSION TUBING 140CM LUER-LOCK", uom: "PC", alt: "Alternatives: PERFUSOR 150CM (86000024) or TUTA 150CM (86000453)" },
+    { code: "86701092", desc: "INFUSION PUMP SET 2-CLAVE", uom: "PC", alt: "Alternative: INFUSION SET VL STANDARD 02 (Code: 86701098)" },
+    { code: "83900202", desc: "IV CATH AUTOGUARD G-20", uom: "PC", alt: "Alternative: I.V. CATHETER G.20 INTROCAN BBRAUN (Code: 83900360)" },
+    { code: "83900204", desc: "IV CATH AUTOGUARD G-22", uom: "PC", alt: "Alternative: I.V. CATHETER G.22 INTROCAN BBRAUN (Code: 83900361)" },
+    { code: "83900208", desc: "IV CATH AUTOGUARD G-24", uom: "PC", alt: "Alternative: I.V. CATHETER G.24 INTROCAN BBRAUN (Code: 83900362)" },
+    { code: "86701094", desc: "MACROSET HOSPIRA LUER-LOCK", uom: "PC", alt: "Alternative: TUDOR MACROSET ADULT (Code: 86701089)" },
+    { code: "83300008", desc: "STOPCOCK 3-WAY LUER-LOCK CONNECTA BD", uom: "PC", alt: "Alternatives: DISCOFIX (83300043) or UNIMEX (83300044)" },
+    { code: "85701018", desc: "SYRINGE 1CC TUBERCULINE W/ NEEDLE", uom: "PC", alt: "Alternative: SYRINGE 1CC W/ NEEDLE LL G25, NIPRO (Code: 85701077)" },
+    { code: "85701005", desc: "SYRINGE 3.0CC W/ NEEDLE LUER LOCK", uom: "PC", alt: "Alternative: SYRINGE 3CC W/ NEEDLE LL G23, NIPRO (Code: 85701075)" },
+    { code: "85701033", desc: "SYRINGE 50/60CC LUERLOCK", uom: "PC", alt: "Alternative: SYRINGE 50CC LL, NIPRO (Code: 82700127)" },
+    { code: "85701028", desc: "SYRINGE PF SALINE FLUSH 10ML UNIMEX", uom: "PC", alt: "Alternative: SYRINGE PF SALINE FLUSH 10ML, AMSAFE (Code: 85701087)" },
+    { code: "81400002", desc: "WITHDRAWAL CANNULA", uom: "PC", alt: "Alternative: WITHDRAWAL CANNULA - HOSPIRA (Code: 81400004)" },
+    { code: "83401008", desc: "ANESTHESIA MASK SIZE 4 CHILD/SMALL ADULT", uom: "PC", alt: "Alternatives: NORMSOFT (83401071) or SCENTED (80200031)" },
+    { code: "83401009", desc: "ANESTHESIA MASK SIZE 5 ADULT", uom: "PC", alt: "Alternatives: SCENTED (83401070) or HISERN (80200050)" },
+    { code: "82700096", desc: "2560 ELECTRODES ADULT RED DOT 50/PAC", uom: "PC", alt: "Alternative: ECG ELECTRODES ADULT BLUE SENSOR (Code: 82700099)" },
+    { code: "84000014", desc: "OXYGEN CONNECTING TUBE", uom: "PC", alt: "Alternative: OXYGEN CONNECTING TUBE #1302 - AIRLIFE (Code: 84000022)" },
+    { code: "80500026", desc: "AMBUBAG ADULT", uom: "PC", alt: "Alternative: RESUSCITATOR BAG W/ FILTER ADULT BENEFI (Code: 82700156)" },
+    { code: "80500028", desc: "AMBUBAG NEONATE", uom: "PC", alt: "Alternative: RESUSCITATOR BAG NEONATE -BENEFI (Code: 84000029)" },
+    { code: "44004351", desc: "NSS (EURO-MED) 50 ML VIAL", uom: "VL", alt: "Alternative: NSS 100ML (A.N.B LAB) (Code: 44010059)" },
+    { code: "44001033", desc: "NSS (EURO-MED) 1 L SOL'N", uom: "PC", alt: "Alternative: NSS 1LITER (B. BRAUN) (Code: 44010041)" },
+    { code: "44000122", desc: "NSS (EURO-MED) 500 ML SOL'N", uom: "PC", alt: "Alternative: NSS 500ML (B. BRAUN) (Code: 44010040)" },
+    { code: "84300015", desc: "LUBRICATING JELLY 10G", uom: "PC", alt: "Alternative: LUBRICATING JELLY 5 GM (Code: 84300041)" },
+    { code: "82900009", desc: "GLOVES PAIRED 7.0 STERILE", uom: "PR", alt: "Alternative: Hypo-Allergenic (Code: 82900002)" },
+    { code: "81400008", desc: "NASAL OXYGEN CANNULA PEDIA", uom: "PC", alt: "Alternative: HEXACARE (Code: 84300082)" },
+    { code: "81400001", desc: "NASAL OXYGEN CANNULA ADULT", uom: "PC", alt: "Alternative: HEXACARE (Code: 84300083)" },
+
+    // --- UNLINKED PRIMARY ITEMS ---
+    { code: "42422511", desc: "ISOKET 10 MG/10 ML (1MG/ML) AMP", uom: "AMP" },
+    { code: "42410008", desc: "CORDARONE 150 MG/3 ML (50 MG/ML) AMP HAM)", uom: "AMP" },
+    { code: "42460044", desc: "DOBUzef 250 MG/5 ML (50 MG/ML) AMP (HAM)", uom: "AMP" },
+    { code: "42410050", desc: "DOPamax 200MG/5ML(40MG/ML) AMP 5'S (HAM)", uom: "AMP" },
+    { code: "42410030", desc: "ADRENALINE (EPINEPHrine) 1MG/ML (HAM)", uom: "AMP" },
+    { code: "42460021", desc: "LEVOPHED SF (SULFITE-FREE) 4 MG/4 ML (1 MG/ML) AMP (HAM)", uom: "AMP" },
+    { code: "42890011", desc: "magnesium SULFATE (HIZON) 2,500 MG/10 ML (250 MG/ML) AMP (HAM)", uom: "AMP" },
+    { code: "80200012", desc: "AIRWAY ORAL SIZE 1.0 BLUE", uom: "PC" },
+    { code: "80200000", desc: "AIRWAY ORAL SIZE 2.0 BLACK", uom: "PC" },
+    { code: "83401012", desc: "ANESTHESIA MASK SIZE 1 NEONATE", uom: "PC" },
+    { code: "83401007", desc: "ANESTHESIA MASK SIZE 2 INFANT", uom: "PC" },
+    { code: "83401013", desc: "ANESTHESIA MASK SIZE 3 TODDLER", uom: "PC" },
+    { code: "81800026", desc: "CATHETER SUCTION FR. 10 X 51CM", uom: "PC" },
+    { code: "81801032", desc: "CATHETER SUCTION FR. 5 X 50CM", uom: "PC" },
+    { code: "81800012", desc: "CATHETER SUCTION FR. 8 X 53CM", uom: "PC" },
+    { code: "86000004", desc: "FEEDING TUBE FR. 5 X 40CM", uom: "PC" },
+    { code: "86000003", desc: "FEEDING TUBE FR. 8 X 40CM", uom: "PC" },
+    { code: "86000010", desc: "INTUBATING STYLET PEDIA", uom: "PC" },
+    { code: "83400005", desc: "OXYGEN MASK PEDIA W/ RESERVOIR BAG", uom: "PC" },
+    { code: "84700002", desc: "PLASTER LEUKOPLAST 2\" X 5 METERS", uom: "RL" },
+    { code: "84701004", desc: "PLASTER MICROPORE 1/2\" X 10 YARDS", uom: "RL" },
+    { code: "80200001", desc: "AIRWAY ORAL SIZE 3.0 WHITE", uom: "PC" },
+    { code: "80200002", desc: "AIRWAY ORAL SIZE 4.0 GREEN", uom: "PC" },
+    { code: "80200003", desc: "AIRWAY ORAL SIZE 5.0 YELLOW", uom: "PC" },
+    { code: "86000164", desc: "BOUGIE ADULT - SEDASENZ", uom: "PC" },
+    { code: "81800027", desc: "CATHETER SUCTION FR. 12 X 51CM", uom: "PC" },
+    { code: "81800028", desc: "CATHETER SUCTION FR. 14 X 51CM", uom: "PC" },
+    { code: "81800133", desc: "CATHETER SUCTION FR. 16 X 53CM", uom: "PC" },
+    { code: "86000012", desc: "INTUBATING STYLET ADULT", uom: "PC" },
+    { code: "83300014", desc: "CLAVE TRI-FUSE EXTENSION SET", uom: "PC" },
+    { code: "82300001", desc: "COTTON BALLS STERILE 6'S", uom: "PAC" },
+    { code: "83900210", desc: "IV CATHETER NEOFLON PRO G24 #391380", uom: "PC" },
+    { code: "83900211", desc: "IV CATHETER NEOFLON PRO G26 #391379", uom: "PC" },
+    { code: "83900134", desc: "I.V. START PACK", uom: "PC" },
+    { code: "83900200", desc: "IV CATH AUTOGUARD G-18", uom: "PC" },
+    { code: "84701005", desc: "PLASTER MICROPORE 1\" X 10 YARDS", uom: "RL" },
+    { code: "84701006", desc: "PLASTER MICROPORE 2\" X 10 YARDS", uom: "RL" },
+    { code: "86000250", desc: "BLOOD COLLECTION SET w/ lock G-23", uom: "PC" },
+    { code: "86000255", desc: "BLOOD COLLECTION SET G-25 VACUETTE", uom: "PC" },
+    { code: "83401020", desc: "ANESTHESIA MASK SIZE 6 LARGE ADULT", uom: "PC" },
+    { code: "86000142", desc: "E.T. HOLDER ADULT", uom: "PC" },
+    { code: "84300048", desc: "ECG PAPER DEFIBRILLATOR - PHILIPS", uom: "RL" },
+    { code: "83401056", desc: "FACE MASK EARLOOP 3-PLY 50/BOX", uom: "PC" },
+    { code: "82900046", desc: "GLOVES EXAM MEDIUM POWDER FREE", uom: "BOX" },
+    { code: "86000005", desc: "NGT FR. 10 X 100CM", uom: "PC" },
+    { code: "86000056", desc: "NGT FR. 12 X 122CM", uom: "PC" },
+    { code: "86000006", desc: "NGT FR. 14 X 125CM", uom: "PC" },
+    { code: "86000007", desc: "NGT FR. 16 X 125CM", uom: "PC" },
+    { code: "83400006", desc: "OXYGEN MASK ADULT W/ RESERVOIR BAG", uom: "PC" },
+    { code: "86000011", desc: "SUCTION CONNECTING TUBE FR. 25 X 210CM", uom: "PC" },
+    { code: "85701007", desc: "SYRINGE BULB ASEPTO 50CC", uom: "PC" },
+    { code: "84300049", desc: "ECG PAPER DEFIBRILLATOR - ZOLL", uom: "PAD" },
+    { code: "82700210", desc: "AMBUBAG PEDIA SEBS - CRITICARE", uom: "PC" },
+    { code: "44006788", desc: "NSS (B. BRAUN) 100 ML SOL'N ECOFLAC PLUS", uom: "PC" },
+    { code: "83700011", desc: "NSS SOLUTION FOR IRRIGATION 1 LITER", uom: "BOT" },
+    { code: "44005238", desc: "D10W (EURO-MED) 500 ML SOL'N", uom: "PC" },
+    { code: "44010047", desc: "D5 WATER 250ML (B. BRAUN) ECOFLAC PLUS", uom: "PC" },
+    { code: "44000094", desc: "LR (EURO-MED) 1 L SOL'N", uom: "PC" },
+    { code: "44000095", desc: "LR (EURO-MED) 500 ML SOL'N", uom: "PC" },
+    { code: "87500013", desc: "BACTERIA FILTER BARRIERBAC", uom: "PC" },
+    { code: "43817009", desc: "XYLOCAINE 10% PUMP SPRAY 50ML", uom: "BOT" },
+    { code: "87500019", desc: "NIPPLE & NUT ADAPTOR", uom: "PC" },
+    { code: "82900011", desc: "GLOVES PAIRED 7.5 STERILE", uom: "PR" },
+    { code: "86600113", desc: "OXYGEN HUMIDIFIER 500ML", uom: "BOT" },
+
+    // --- ALTERNATIVE ITEMS ---
+    { code: "80200059", desc: "[ALTERNATIVE] AIRWAY NASAL 7.5 #1-SM-NA7530 -RESPISENZ", uom: "PC", isAlt: true },
+    { code: "80200060", desc: "[ALTERNATIVE] AIRWAY NASAL FR24 -SHILEY #8888247015", uom: "PC", isAlt: true },
+    { code: "80200063", desc: "[ALTERNATIVE] AIRWAY NASAL SIZE 6.0 FR.24 -TAPPA", uom: "PC", isAlt: true },
+    { code: "80200065", desc: "[ALTERNATIVE] AIRWAY NASAL SIZE 7.0 FR.28 -TAPPA", uom: "PC", isAlt: true },
+    { code: "80200055", desc: "[ALTERNATIVE] AIRWAY NASAL SIZE 7.0, RESPISENZ", uom: "PC", isAlt: true },
+    { code: "80200066", desc: "[ALTERNATIVE] AIRWAY NASAL SIZE 7.5 FR.30 -TAPPA", uom: "PC", isAlt: true },
+    { code: "83401070", desc: "[ALTERNATIVE] ANESTHESIA MASK SCENTED SIZE 5", uom: "PC", isAlt: true },
+    { code: "83401071", desc: "[ALTERNATIVE] ANESTHESIA MASK SIZE 4 ,NORMSOFT", uom: "PC", isAlt: true },
+    { code: "80200050", desc: "[ALTERNATIVE] ANESTHESIA MASK SIZE 5, HISERN", uom: "PC", isAlt: true },
+    { code: "42800059", desc: "[ALTERNATIVE] ANXIOL 10MG/2ML (5MG/ML) AMP 10'S (HAM)", uom: "AMP", isAlt: true },
+    { code: "42800076", desc: "[ALTERNATIVE] ATROPINE SULFATE (CIRON) 1MG/ML AMP 10'S", uom: "AMP", isAlt: true },
+    { code: "48840009", desc: "[ALTERNATIVE] CA. GLUCONATE 10% 10ML VL(B.B) 20'S(HAM)", uom: "VL", isAlt: true },
+    { code: "82700099", desc: "[ALTERNATIVE] ECG ELECTRODES ADULT BLUE SENSOR 50/PAC", uom: "PC", isAlt: true },
+    { code: "80200069", desc: "[ALTERNATIVE] ENDO TUBE 2.0 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001129", desc: "[ALTERNATIVE] ENDO TUBE 2.0 W/OUT CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "80200070", desc: "[ALTERNATIVE] ENDO TUBE 2.5 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001130", desc: "[ALTERNATIVE] ENDO TUBE 2.5 W/OUT CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "80200071", desc: "[ALTERNATIVE] ENDO TUBE 3.0 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001131", desc: "[ALTERNATIVE] ENDO TUBE 3.0 W/OUT CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "80200072", desc: "[ALTERNATIVE] ENDO TUBE 3.5 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001117", desc: "[ALTERNATIVE] ENDO TUBE 3.5 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "80200073", desc: "[ALTERNATIVE] ENDO TUBE 4.0 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001133", desc: "[ALTERNATIVE] ENDO TUBE 4.0 W/OUT CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "80200074", desc: "[ALTERNATIVE] ENDO TUBE 4.5 UNCUFFED -SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001119", desc: "[ALTERNATIVE] ENDO TUBE 4.5 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001135", desc: "[ALTERNATIVE] ENDO TUBE 5.0 W/OUT CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001121", desc: "[ALTERNATIVE] ENDO TUBE 5.5 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001122", desc: "[ALTERNATIVE] ENDO TUBE 6.0 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001123", desc: "[ALTERNATIVE] ENDO TUBE 6.5 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001124", desc: "[ALTERNATIVE] ENDO TUBE 7.0 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001163", desc: "[ALTERNATIVE] ENDO TUBE 7.0 W/ CUFF SEDASENZ", uom: "PC", isAlt: true },
+    { code: "86001125", desc: "[ALTERNATIVE] ENDO TUBE 7.5 W/ CUFF RUSCH", uom: "PC", isAlt: true },
+    { code: "86001164", desc: "[ALTERNATIVE] ENDO TUBE 7.5 W/ CUFF SEDASENZ", uom: "PC", isAlt: true },
+    { code: "83900360", desc: "[ALTERNATIVE] I.V. CATHETER G.20 INTROCAN BBRAUN", uom: "PC", isAlt: true },
+    { code: "83900361", desc: "[ALTERNATIVE] I.V. CATHETER G.22 INTROCAN BBRAUN", uom: "PC", isAlt: true },
+    { code: "83900362", desc: "[ALTERNATIVE] I.V. CATHETER G.24 INTROCAN BBRAUN", uom: "PC", isAlt: true },
+    { code: "86701098", desc: "[ALTERNATIVE] INFUSION SET VL STANDARD 02", uom: "PC", isAlt: true },
+    { code: "84300041", desc: "[ALTERNATIVE] LUBRICATING JELLY 5 GM", uom: "PC", isAlt: true },
+    { code: "42800071", desc: "[ALTERNATIVE] MIDAZOLAM (ENLIFE) 5MG/ML AMP 10'S (HAM)", uom: "AMP", isAlt: true },
+    { code: "44010059", desc: "[ALTERNATIVE] NSS 100ML (A.N.B LAB)", uom: "PC", isAlt: true },
+    { code: "44010041", desc: "[ALTERNATIVE] NSS 1LITER (B. BRAUN) ECOFLAC PLUS", uom: "PC", isAlt: true },
+    { code: "44010040", desc: "[ALTERNATIVE] NSS 500ML (B. BRAUN) ECOFLAC PLUS", uom: "PC", isAlt: true },
+    { code: "84000022", desc: "[ALTERNATIVE] OXYGEN CONNECTING TUBE #1302 - AIRLIFE", uom: "PC", isAlt: true },
+    { code: "86000024", desc: "[ALTERNATIVE] PERFUSOR EXTENSION LINE 150CM", uom: "PC", isAlt: true },
+    { code: "84000029", desc: "[ALTERNATIVE] RESUSCITATOR BAG NEONATE -BENEFI", uom: "VSET", isAlt: true },
+    { code: "82700156", desc: "[ALTERNATIVE] RESUSCITATOR BAG W/ FILTER ADULT BENEFI", uom: "VSET", isAlt: true },
+    { code: "44010000", desc: "[ALTERNATIVE] SODIUM BICARBONATE 8.4% 100ML VL BBRAUN", uom: "VL", isAlt: true },
+    { code: "83300043", desc: "[ALTERNATIVE] STOPCOCK 3-WAY LUER LOCK DISCOFIX", uom: "PC", isAlt: true },
+    { code: "83300044", desc: "[ALTERNATIVE] STOPCOCK 3-WAY LUER LOCK - UNIMEX", uom: "PC", isAlt: true },
+    { code: "85701078", desc: "[ALTERNATIVE] SYRINGE 10CC W/ NEEDLE LUER LOCK, NIPRO", uom: "PC", isAlt: true },
+    { code: "85701077", desc: "[ALTERNATIVE] SYRINGE 1CC W/ NEEDLE LL G25, NIPRO", uom: "PC", isAlt: true },
+    { code: "85701132", desc: "[ALTERNATIVE] SYRINGE 30CC W/O NEEDLE LL - NIPRO", uom: "PC", isAlt: true },
+    { code: "85701075", desc: "[ALTERNATIVE] SYRINGE 3CC W/ NEEDLE LL G23, NIPRO", uom: "PC", isAlt: true },
+    { code: "82700127", desc: "[ALTERNATIVE] SYRINGE 50CC LL, NIPRO", uom: "PC", isAlt: true },
+    { code: "85701076", desc: "[ALTERNATIVE] SYRINGE 5CC W/ NEEDLE LL G23, NIPRO", uom: "PC", isAlt: true },
+    { code: "85701087", desc: "[ALTERNATIVE] SYRINGE PF SALINE FLUSH 10ML, AMSAFE", uom: "PC", isAlt: true },
+    { code: "86701089", desc: "[ALTERNATIVE] TUDOR MACROSET ADULT (INFUSION SET)", uom: "PC", isAlt: true },
+    { code: "86000453", desc: "[ALTERNATIVE] TUTA EXTENSION SET 150CM, #50.307", uom: "PC", isAlt: true },
+    { code: "48459936", desc: "[ALTERNATIVE] UNI-WIPE ALCOHOL SWAB 70% ALCOHOL 100'S", uom: "PC", isAlt: true },
+    { code: "81400004", desc: "[ALTERNATIVE] WITHDRAWAL CANNULA - HOSPIRA", uom: "PC", isAlt: true },
+    { code: "43817011", desc: "[ALTERNATIVE] XYLOCAINE 2% POLYAMP 50'S (HAM)", uom: "AMP", isAlt: true },
+    { code: "84300082", desc: "[ALTERNATIVE] NASAL OXYGEN CANNULA PEDIA -HEXACARE", uom: "PC", isAlt: true },
+    { code: "84300083", desc: "[ALTERNATIVE] NASAL OXYGEN CANNULA ADULT -HEXACARE", uom: "PC", isAlt: true },
+    { code: "82900002", desc: "[ALTERNATIVE] GLOVES HYPO-ALLERGENIC 7.0", uom: "PR", isAlt: true }
+  ];
+
+  const uomDictionary = {
+    "AMP": "Ampoule",
+    "VL": "Vial",
+    "PC": "Piece",
+    "PAC": "Pack",
+    "RL": "Roll",
+    "TUB": "Tube",
+    "BOX": "Box",
+    "BOT": "Bottle",
+    "PR": "Pair",
+    "PAD": "Pad",
+    "VSET": "Set"
+  };
+
+  const searchInput = document.getElementById('searchInput');
+  const resultsContainer = document.getElementById('resultsContainer');
+  
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("expandedImg");
+  const captionText = document.getElementById("modalCaption");
+
+  function displayResults(items) {
+    resultsContainer.innerHTML = '';
+    
+    if(items.length === 0) {
+        resultsContainer.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; padding-top: 20px; color: white; font-size: 18px; text-shadow: 1px 1px 2px black;">No items found.</p>';
+        return;
+    }
+
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      
+      const imageFileName = item.code + '.png';
+
+      card.style.cursor = 'pointer';
+      card.onclick = function() {
+        modal.style.display = "block";
+        modalImg.src = imageFileName;
+        
+        modalImg.onerror = function() {
+            this.src = 'https://via.placeholder.com/600x400?text=No+Image+Found';
+        };
+        
+        let alternativeText = "";
+        if (item.alt) {
+            alternativeText = `<div class="modal-alt-item"><strong style="color:white;">Note:</strong> ${item.alt}</div>`;
+        }
+
+        captionText.innerHTML = `<span class="modal-item-code">Code: ${item.code}</span><br>${item.desc}${alternativeText}`;
+      };
+
+      const fullUomName = uomDictionary[item.uom] || item.uom;
+      
+      const altBadge = item.isAlt ? '<div class="badge-alt">Alternative Item</div>' : '';
+
+      card.innerHTML = `
+        <img class="item-image" src="${imageFileName}" alt="${item.desc}" onerror="this.src='https://via.placeholder.com/150?text=No+Image+Found'">
+        <div class="item-code">Code: ${item.code}</div>
+        ${altBadge}
+        <div class="item-desc">${item.desc}</div>
+        <div class="item-uom">Unit of Measure: ${fullUomName}</div>
+      `;
+      resultsContainer.appendChild(card);
+    });
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  displayResults(inventory);
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredItems = inventory.filter(item => 
+      item.desc.toLowerCase().includes(searchTerm) || 
+      item.code.includes(searchTerm)
+    );
+    displayResults(filteredItems);
+  });
+</script>
+</body>
+</html>
