@@ -212,6 +212,11 @@
   <div class="results-grid" id="resultsContainer"></div>
 </div>
 
+  <div style="text-align: center; margin-top: 20px; margin-bottom: 40px; padding-bottom: 40px;">
+    <a href="YOUR_LINK_HERE" target="_blank" style="color: white; font-size: 18px; text-decoration: none; font-weight: bold; background-color: #ee4d2d; padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+      💬 Are you satisfied with A.I.M.? Click here to leave feedback!
+    </a>
+  </div>
 <div id="imageModal" class="modal">
   <span class="close-btn" onclick="closeModal()">&times;</span>
  <img class="modal-content" id="expandedImg" loading="lazy">
@@ -219,6 +224,13 @@
 </div>
 
 <script>
+  // --- WELCOME POP-UP ---
+  window.onload = function() {
+    let unitName = prompt("Welcome to A.I.M.! Which unit/ward are you from? (e.g., ER, ICU, OR)");
+    if (unitName) {
+      document.querySelector('.banner-subtitle').innerHTML = `Accurate Items Mapping <br><span style="color:white; font-size: 22px;">Welcome, ${unitName} Team!</span>`;
+    }
+  };
   // --- INVENTORY DATABASE ---
   const inventory = [
     // --- PRIMARY ITEMS ---
