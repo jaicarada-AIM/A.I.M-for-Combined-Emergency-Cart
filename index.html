@@ -212,7 +212,10 @@
     
     <h1 class="banner-title">
       A.I.M.
-      <span class="banner-subtitle">Accurate Items Mapping</span>
+      <span class="banner-subtitle">
+        Accurate Items Mapping<br>
+        <span style="color: #ffd54f; font-size: 24px;">Combined Emergency Cart</span>
+      </span>
     </h1>
     
     <div class="search-container">
@@ -221,7 +224,10 @@
   </div>
 
   <div class="results-grid" id="resultsContainer"></div>
-</div>
+  <div style="text-align: center; margin-top: 30px; margin-bottom: 40px; padding-bottom: 40px;">
+    <p style="color: white; font-size: 14px; margin-bottom: 5px;">Live Visitor Count</p>
+    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjaicarada-aim.github.io%2FA.I.M-for-Combined-Emergency-Cart%2F&count_bg=%23EE4D2D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=VISITS&edge_flat=false" alt="Visitor Count">
+  </div>
 
 <div id="imageModal" class="modal">
   <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -235,7 +241,7 @@
     setTimeout(function() {
       let unitName = prompt("Welcome to A.I.M.! Which unit/ward are you from? (e.g., ER, ICU, OR)");
       if (unitName) {
-        document.querySelector('.banner-subtitle').innerHTML = `Accurate Items Mapping <br><span style="color:white; font-size: 22px;">Welcome, ${unitName} Team!</span>`;
+        document.querySelector('.banner-subtitle').innerHTML = `Accurate Items Mapping <br><span style="color: #ffd54f; font-size: 24px;">Combined Emergency Cart</span><br><span style="color:white; font-size: 22px; display:inline-block; margin-top:10px;">Welcome, ${unitName} Team!</span>`; `Accurate Items Mapping <br><span style="color:white; font-size: 22px;">Welcome, ${unitName} Team!</span>`;
       }
     }, 300);
   });
