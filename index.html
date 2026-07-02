@@ -200,8 +200,9 @@
 
 <div id="mainApp">
   <div class="header-container">
-    <a href="https://forms.gle/HgH3FfEaWhPRSHA69" target="_blank" style="position: absolute; top: 20px; right: 20px; color: white; font-size: 14px; text-decoration: none; font-weight: bold; background-color: #ee4d2d; padding: 8px 16px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 10;">
+<a href="https://forms.gle/9vVjje9Rb9ohwyHt6" target="_blank" style="position: fixed; top: 15px; right: 15px; color: white; font-size: 14px; text-decoration: none; font-weight: bold; background-color: #ee4d2d; padding: 8px 16px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 9999;">
     💬 Feedback
+  </a>
   </a>
     <h1 class="banner-title">
       A.I.M.
@@ -226,13 +227,15 @@
 </div>
 
 <script>
-  // --- WELCOME POP-UP ---
-  window.onload = function() {
-    let unitName = prompt("Welcome to A.I.M.! Which unit/ward are you from? (e.g., ER, ICU, OR)");
-    if (unitName) {
-      document.querySelector('.banner-subtitle').innerHTML = `Accurate Items Mapping <br><span style="color:white; font-size: 22px;">Welcome, ${unitName} Team!</span>`;
-    }
-  };
+ // --- WELCOME POP-UP ---
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+      let unitName = prompt("Welcome to A.I.M.! Which unit/ward are you from? (e.g., ER, ICU, OR)");
+      if (unitName) {
+        document.querySelector('.banner-subtitle').innerHTML = `Accurate Items Mapping <br><span style="color:white; font-size: 22px;">Welcome, ${unitName} Team!</span>`;
+      }
+    }, 300);
+  });
   // --- INVENTORY DATABASE ---
   const inventory = [
     // --- PRIMARY ITEMS ---
