@@ -207,7 +207,7 @@
 
 <div id="imageModal" class="modal">
   <span class="close-btn" onclick="closeModal()">&times;</span>
-  <img class="modal-content" id="expandedImg">
+ <img class="modal-content" id="expandedImg" loading="lazy">
   <div id="modalCaption"></div>
 </div>
 
@@ -454,7 +454,7 @@
       const altBadge = item.isAlt ? '<div class="badge-alt">Alternative Item</div>' : '';
 
       card.innerHTML = `
-        <img class="item-image" src="${imageFileName}" alt="${item.desc}" onerror="this.src='https://via.placeholder.com/150?text=No+Image+Found'">
+        <img class="<img class="item-image" src="${imageFileName}" alt="${item.desc}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=No+Image+Found'">
         <div class="item-code">Code: ${item.code}</div>
         ${altBadge}
         <div class="item-desc">${item.desc}</div>
