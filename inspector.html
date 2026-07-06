@@ -15,7 +15,6 @@
   #resultsContainer { padding: 20px; }
 
   /* --- INSPECTOR PANEL & LEGEND --- */
-  /* Widened to 1400px to comfortably fit the Remarks column */
   .inspector-header-panel { background: white; padding: 20px; border-radius: 8px; margin: 0 auto 20px auto; max-width: 1400px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
   .controls-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
   
@@ -41,7 +40,7 @@
   
   .status-select { padding: 6px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; cursor: pointer; width: 155px; }
   .input-field { padding: 6px; border-radius: 4px; border: 1px solid #ccc; text-align: center; }
-  .remarks-input { width: 130px; text-align: left; } /* New style for left-aligned remarks */
+  .remarks-input { width: 130px; text-align: left; } 
   .expected-qty-badge { background-color: #eee; padding: 4px 8px; border-radius: 12px; font-weight: bold; color: #333; display: inline-block; }
 
   .btn { padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; color: white; transition: 0.2s; }
@@ -56,8 +55,21 @@
   .signatures { display: flex; justify-content: space-between; margin-bottom: 40px; margin-top: 20px;}
   .sig-block { width: 45%; font-size: 14px; }
   .notes-block { font-size: 14px; line-height: 2.2; }
-  .signature-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; }
   
+  .sig-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    padding: 5px 0;
+    margin-bottom: 5px;
+    background: transparent;
+  }
+  .sig-input:focus { background-color: #f0f8ff; border-bottom: 2px solid #007bff; }
+
   .footer-input {
     border: none;
     border-bottom: 1px solid #000;
@@ -80,7 +92,8 @@
     .inspector-table td { border: 1px solid #000; }
     input, select { border: none; background: transparent; appearance: none; -webkit-appearance: none; font-weight: bold;}
     .audit-footer { display: block !important; page-break-inside: avoid; } 
-    .footer-input { border-bottom: 1px solid #000 !important; }
+    .footer-input, .sig-input { border-bottom: 1px solid #000 !important; }
+    .sig-input::placeholder, .footer-input::placeholder { color: transparent; } /* Hides placeholder text when printing */
   }
 </style>
 </head>
@@ -97,14 +110,16 @@
     <div class="signatures">
       <div class="sig-block">
         <strong>Prepared by:</strong>
-        <div class="signature-line">
+        <div style="margin-top: 40px;">
+          <input type="text" class="sig-input" placeholder="Type Inspector Name(s) Here...">
           Floorstock Inspectors<br>
           Signature Over Printed Name / Date
         </div>
       </div>
       <div class="sig-block">
         <strong>Received by:</strong>
-        <div class="signature-line">
+        <div style="margin-top: 40px;">
+          <input type="text" class="sig-input" placeholder="Type Unit Manager Name Here...">
           Unit Manager / Representative<br>
           Signature Over Printed Name / Date
         </div>
@@ -363,32 +378,32 @@
     { code: "83100004", desc: "RINSING GLASS PLASTIC", cost: 18.54, uom: "PC", cartQty: { "Neonatal": 2 }, drawer: "Drawer 6" },
 
     // --- INTUBATION KIT ---
-    { code: "80500026", desc: "AMBUBAG ADULT", cost: 2340.19, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "80500028", desc: "AMBUBAG NEONATE", cost: 947.79, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "87500013", desc: "BACTERIA FILTER BARRIERBAC", cost: 190.49, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "0 - Intubation Kit" },
-    { code: "43817009", desc: "XYLOCAINE 10% PUMP SPRAY 50ML", cost: 2725.92, uom: "BOT", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "84300015", desc: "LUBRISAFE LUBRICATING JELLY 10 GM", cost: 6.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2, "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "87500019", desc: "NIPPLE & NUT ADAPTOR", cost: 106.60, uom: "PC", cartQty: { "Combined": 5, "Adult": 5 }, drawer: "0 - Intubation Kit" },
-    { code: "85701003", desc: "SYRINGE 10CC W/ NEEDLE LUER LOCK", cost: 8.75, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000012", desc: "INTUBATING STYLET ADULT", cost: 188.32, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000010", desc: "INTUBATING STYLET PEDIA (Kit)", cost: 375.67, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000028", desc: "ENDO TUBE STANDARD SIZE 7.0", cost: 327.27, uom: "PC", cartQty: { "Combined": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000147", desc: "ENDO TUBE STANDARD SIZE 7.5", cost: 327.03, uom: "PC", cartQty: { "Combined": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86001064", desc: "ENDO TUBE STANDARD SIZE 7.0 (Rusch)", cost: 738.15, uom: "PC", cartQty: { "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86001065", desc: "ENDO TUBE STANDARD SIZE 7.5 (Rusch)", cost: 726.30, uom: "PC", cartQty: { "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000143", desc: "ENDO TUBE STANDARD SIZE 2.0 (Kit)", cost: 151.49, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000051", desc: "ENDO TUBE STANDARD SIZE 2.5 (Kit)", cost: 166.82, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000144", desc: "ENDO TUBE STANDARD SIZE 3.0 (Kit)", cost: 330.66, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "86000042", desc: "ENDO TUBE STANDARD SIZE 4.0 (Kit)", cost: 317.20, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "84700002", desc: "PLASTER LEUKOPLAST 2\" X 5 METERS", cost: 339.35, uom: "RL", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "84700000", desc: "PLASTER LEUKOPLAST 3\" X 5 METERS", cost: 449.92, uom: "RL", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "82900009", desc: "GLOVES PAIRED 7.0 STERILE", cost: 13.10, uom: "PR", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "82900011", desc: "GLOVES PAIRED 7.5 STERILE", cost: 13.10, uom: "PR", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "82900010", desc: "GLOVES PAIRED 6.5 STERILE", cost: 13.10, uom: "PR", cartQty: { "Neonatal": 2 }, drawer: "0 - Intubation Kit" },
-    { code: "23003347", desc: "Laryngoscope batteries AA (extra)", cost: 0.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "0 - Intubation Kit" },
-    { code: "34040379", desc: "Laryngoscope bulb #4 WA", cost: 0.00, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "23000106", desc: "Penlight", cost: 0.00, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
-    { code: "23003355", desc: "Penlight batteries AAA", cost: 0.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "0 - Intubation Kit" },
+    { code: "80500026", desc: "AMBUBAG ADULT", cost: 2340.19, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "80500028", desc: "AMBUBAG NEONATE", cost: 947.79, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "87500013", desc: "BACTERIA FILTER BARRIERBAC", cost: 190.49, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "Intubation Kit" },
+    { code: "43817009", desc: "XYLOCAINE 10% PUMP SPRAY 50ML", cost: 2725.92, uom: "BOT", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "84300015", desc: "LUBRISAFE LUBRICATING JELLY 10 GM", cost: 6.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2, "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "87500019", desc: "NIPPLE & NUT ADAPTOR", cost: 106.60, uom: "PC", cartQty: { "Combined": 5, "Adult": 5 }, drawer: "Intubation Kit" },
+    { code: "85701003", desc: "SYRINGE 10CC W/ NEEDLE LUER LOCK", cost: 8.75, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "86000012", desc: "INTUBATING STYLET ADULT", cost: 188.32, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "86000010", desc: "INTUBATING STYLET PEDIA (Kit)", cost: 375.67, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "86000028", desc: "ENDO TUBE STANDARD SIZE 7.0", cost: 327.27, uom: "PC", cartQty: { "Combined": 1 }, drawer: "Intubation Kit" },
+    { code: "86000147", desc: "ENDO TUBE STANDARD SIZE 7.5", cost: 327.03, uom: "PC", cartQty: { "Combined": 1 }, drawer: "Intubation Kit" },
+    { code: "86001064", desc: "ENDO TUBE STANDARD SIZE 7.0 (Rusch)", cost: 738.15, uom: "PC", cartQty: { "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "86001065", desc: "ENDO TUBE STANDARD SIZE 7.5 (Rusch)", cost: 726.30, uom: "PC", cartQty: { "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "86000143", desc: "ENDO TUBE STANDARD SIZE 2.0 (Kit)", cost: 151.49, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "86000051", desc: "ENDO TUBE STANDARD SIZE 2.5 (Kit)", cost: 166.82, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "86000144", desc: "ENDO TUBE STANDARD SIZE 3.0 (Kit)", cost: 330.66, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "86000042", desc: "ENDO TUBE STANDARD SIZE 4.0 (Kit)", cost: 317.20, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "84700002", desc: "PLASTER LEUKOPLAST 2\" X 5 METERS", cost: 339.35, uom: "RL", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "84700000", desc: "PLASTER LEUKOPLAST 3\" X 5 METERS", cost: 449.92, uom: "RL", cartQty: { "Neonatal": 1 }, drawer: "Intubation Kit" },
+    { code: "82900009", desc: "GLOVES PAIRED 7.0 STERILE", cost: 13.10, uom: "PR", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "82900011", desc: "GLOVES PAIRED 7.5 STERILE", cost: 13.10, uom: "PR", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "82900010", desc: "GLOVES PAIRED 6.5 STERILE", cost: 13.10, uom: "PR", cartQty: { "Neonatal": 2 }, drawer: "Intubation Kit" },
+    { code: "23003347", desc: "Laryngoscope batteries AA (extra)", cost: 0.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "Intubation Kit" },
+    { code: "34040379", desc: "Laryngoscope bulb #4 WA", cost: 0.00, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "23000106", desc: "Penlight", cost: 0.00, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Intubation Kit" },
+    { code: "23003355", desc: "Penlight batteries AAA", cost: 0.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "Intubation Kit" },
 
     // --- EXTERNAL ITEMS ---
     { code: "EXT-001", desc: "Cardiac Board", cost: 0.00, uom: "PC", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 1 }, drawer: "External Items" },
@@ -401,6 +416,18 @@
 
   const uomDictionary = { "AMP": "Ampoule", "VL": "Vial", "PC": "Piece", "PAC": "Pack", "RL": "Roll", "TUB": "Tube", "BOX": "Box", "BOT": "Bottle", "PR": "Pair", "PAD": "Pad", "VSET": "Set" };
   const resultsContainer = document.getElementById('resultsContainer');
+
+  // CUSTOM SORTING ENGINE
+  const drawerOrder = [
+    "Drawer 1 - Medications",
+    "Drawer 2",
+    "Drawer 3",
+    "Drawer 4",
+    "Drawer 5",
+    "Drawer 6",
+    "Intubation Kit",
+    "External Items"
+  ];
 
   window.onload = function() {
     renderInspectorChecklist('Combined');
@@ -445,7 +472,14 @@
       return acc;
     }, {});
 
-    const sortedDrawers = Object.keys(groupedByDrawer).sort();
+    // SORT DRAWERS USING CUSTOM ENGINE
+    const sortedDrawers = Object.keys(groupedByDrawer).sort((a, b) => {
+      let indexA = drawerOrder.indexOf(a);
+      let indexB = drawerOrder.indexOf(b);
+      if(indexA === -1) indexA = 999;
+      if(indexB === -1) indexB = 999;
+      return indexA - indexB;
+    });
 
     sortedDrawers.forEach(drawer => {
       const items = groupedByDrawer[drawer];
@@ -513,12 +547,10 @@
     document.getElementById('auditFooter').style.display = 'block';
   }
 
-  // --- SPLIT ROW FUNCTION ---
   function splitRow(button) {
     const row = button.closest('tr');
     const newRow = row.cloneNode(true);
     
-    // Reset values in the new row
     newRow.querySelector('.qty-input').value = '';
     newRow.querySelector('.expiry-input').value = '';
     newRow.querySelector('.remarks-input').value = '';
@@ -526,10 +558,9 @@
     newRow.querySelector('.status-select').value = 'Present';
     manualColorOverride(newRow.querySelector('.status-select'));
     
-    // Set Expected QTY to 0 so it doesn't inflate requirements
     newRow.dataset.expected = "0";
     newRow.querySelector('.expected-qty-badge').innerText = "0";
-    newRow.querySelector('.expected-qty-badge').style.backgroundColor = "#fff3cd"; // Highlight it so they know it's a split row
+    newRow.querySelector('.expected-qty-badge').style.backgroundColor = "#fff3cd"; 
     
     row.parentNode.insertBefore(newRow, row.nextSibling);
   }
