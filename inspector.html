@@ -7,72 +7,20 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
 
-  body { 
-    font-family: Arial, sans-serif; 
-    margin: 0;
-    padding: 0;
-    background-color: #f4f7f6;
-  }
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; }
+  .header-container { background-color: #1a365d; padding: 30px 20px; text-align: center; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+  .banner-title { font-family: 'Montserrat', sans-serif; font-size: 45px; margin: 0; letter-spacing: 2px; }
+  .banner-subtitle { font-size: 20px; color: #4da6ff; margin-top: 5px; display: block;}
 
-  .header-container {
-    background-color: #1a365d;
-    padding: 30px 20px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-
-  .banner-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 45px; 
-    margin: 0;
-    letter-spacing: 2px;
-  }
-
-  .banner-subtitle {
-    font-size: 20px; 
-    color: #4da6ff; 
-    margin-top: 5px;
-  }
-
-  #resultsContainer {
-    padding: 20px;
-  }
+  #resultsContainer { padding: 20px; }
 
   /* --- INSPECTOR PANEL & LEGEND --- */
-  .inspector-header-panel {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin: 0 auto 20px auto;
-    max-width: 1150px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
+  .inspector-header-panel { background: white; padding: 20px; border-radius: 8px; margin: 0 auto 20px auto; max-width: 1250px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .controls-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; font-weight: bold; padding-top: 15px; border-top: 1px solid #eee; }
+  .legend-item { padding: 6px 10px; border-radius: 4px; border: 1px solid #ccc; }
 
-  .controls-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .legend-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-  }
-
-  .legend-item {
-    padding: 6px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-
-  /* --- OFFICIAL ST. LUKE'S STATUS COLORS --- */
+  /* --- STATUS COLORS --- */
   .row-present    { background-color: #ffffff; }
   .row-lacking    { background-color: #f8d7da !important; color: #721c24; } 
   .row-expired    { background-color: #fff3cd !important; color: #856404; } 
@@ -83,79 +31,26 @@
   .row-excess     { background-color: #d4edda !important; color: #155724; } 
 
   /* --- TABLE STYLES --- */
-  .inspector-drawer-title {
-    background-color: #4da6ff;
-    color: white;
-    padding: 12px;
-    margin-top: 20px;
-    border-radius: 8px 8px 0 0;
-    font-weight: bold;
-    font-size: 16px;
-    max-width: 1150px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .inspector-table {
-    width: 100%;
-    max-width: 1150px;
-    margin: 0 auto 20px auto;
-    background: white;
-    border-collapse: collapse;
-    border-radius: 0 0 8px 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-
-  .inspector-table th, .inspector-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-    transition: background-color 0.3s;
-  }
-
+  .inspector-drawer-title { background-color: #4da6ff; color: white; padding: 12px; margin-top: 20px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 16px; max-width: 1250px; margin-left: auto; margin-right: auto; }
+  .inspector-table { width: 100%; max-width: 1250px; margin: 0 auto 20px auto; background: white; border-collapse: collapse; border-radius: 0 0 8px 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+  .inspector-table th, .inspector-table td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 13px; transition: background-color 0.3s; }
   .inspector-table th { background-color: #ee4d2d; color: white; font-weight: bold; }
   .inspector-table tr:hover { opacity: 0.95; }
   
-  .status-select {
-    padding: 6px;
-    border-radius: 4px;
-    font-weight: bold;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    width: 145px;
-  }
+  .status-select { padding: 6px; border-radius: 4px; font-weight: bold; border: 1px solid #ccc; cursor: pointer; width: 135px; }
+  .input-field { padding: 6px; border-radius: 4px; border: 1px solid #ccc; text-align: center; }
+  .expected-qty-badge { background-color: #eee; padding: 4px 8px; border-radius: 12px; font-weight: bold; color: #333; display: inline-block; }
 
-  .input-field {
-    padding: 6px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    text-align: center;
-  }
-
-  .expected-qty-badge {
-    background-color: #eee;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: bold;
-    color: #333;
-    display: inline-block;
-  }
-
-  .btn {
-    padding: 10px 15px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    color: white;
-    transition: 0.2s;
-  }
+  .btn { padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; color: white; transition: 0.2s; }
   .btn-print { background-color: #007bff; }
-  .btn-print:hover { background-color: #0056b3; }
   .btn-export { background-color: #28a745; }
-  .btn-export:hover { background-color: #1e7e34; }
+
+  /* --- SIGNATURE FOOTER STYLES --- */
+  .audit-footer { display: none; margin: 40px auto; max-width: 1250px; padding: 20px; background: white; border-top: 3px solid #1a365d; }
+  .signatures { display: flex; justify-content: space-between; margin-bottom: 40px; margin-top: 20px;}
+  .sig-block { width: 45%; font-size: 14px; }
+  .notes-block { font-size: 14px; line-height: 1.8; }
+  .signature-line { margin-top: 40px; border-top: 1px solid #000; padding-top: 5px; }
 
   /* --- PRINT STYLES --- */
   @media print {
@@ -166,6 +61,7 @@
     .inspector-table th { color: black !important; background-color: #f1f1f1 !important; border: 1px solid #000; }
     .inspector-table td { border: 1px solid #000; }
     input, select { border: none; background: transparent; appearance: none; -webkit-appearance: none; font-weight: bold;}
+    .audit-footer { display: block !important; page-break-inside: avoid; } /* Forces footer to show when printing */
   }
 </style>
 </head>
@@ -174,117 +70,70 @@
 <div id="mainApp">
   <div class="header-container">
     <h1 class="banner-title">A.I.M. AUDIT</h1>
-    <span class="banner-subtitle">Smart Inspector Mode</span>
+    <span class="banner-subtitle">Official Inspector Mode</span>
   </div>
   <div id="resultsContainer"></div>
+
+  <div class="audit-footer" id="auditFooter">
+    <div class="signatures">
+      <div class="sig-block">
+        <strong>Prepared by:</strong>
+        <div class="signature-line">
+          Floorstock Inspectors<br>
+          Signature Over Printed Name / Date
+        </div>
+      </div>
+      <div class="sig-block">
+        <strong>Received by:</strong>
+        <div class="signature-line">
+          Unit Manager / Representative<br>
+          Signature Over Printed Name / Date
+        </div>
+      </div>
+    </div>
+    <div class="notes-block">
+      <strong>NOTE:</strong><br>
+      *Cardiac Defib : ___________________________ date ___________________________<br>
+      *Intubation Kit Lock: _____________________________________________________<br>
+      *E-Cart lock: ___________________________________________________________
+    </div>
+  </div>
 </div>
 
 <script>
-  // --- INVENTORY DATABASE WITH EXPECTED QTY ADDED ---
+  // --- INVENTORY DATABASE (UPDATED WITH CART-SPECIFIC QTY AND UNIT COST) ---
   const inventory = [
-    // --- INTUBATION KIT ---
-    { code: "80500026", desc: "AMBUBAG ADULT", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "80500028", desc: "AMBUBAG NEONATE", qty: 1, uom: "PC", cart: ["Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "87500013", desc: "BACTERIA FILTER BARRIERBAC", qty: 2, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "43817009", desc: "XYLOCAINE 10% PUMP SPRAY 50ML", qty: 1, uom: "BOT", cart: ["Combined", "Adult", "Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "84300015", desc: "LUBRISAFE LUBRICATING JELLY 10 GM", qty: 2, uom: "PC", cart: ["Combined", "Adult", "Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "87500019", desc: "NIPPLE & NUT ADAPTOR", qty: 5, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "85701003", desc: "SYRINGE 10CC W/ NEEDLE LUER LOCK", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "86000012", desc: "INTUBATING STYLET ADULT", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "86000010", desc: "INTUBATING STYLET PEDIA", qty: 1, uom: "PC", cart: ["Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "86000028", desc: "ENDO TUBE STANDARD SIZE 7.0", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "86000147", desc: "ENDO TUBE STANDARD SIZE 7.5", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "84700002", desc: "PLASTER LEUKOPLAST 2\" X 5 METERS", qty: 1, uom: "RL", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "84700000", desc: "PLASTER LEUKOPLAST 3\" X 5 METERS", qty: 1, uom: "RL", cart: ["Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "82900009", desc: "GLOVES PAIRED 7.0 STERILE", qty: 1, uom: "PR", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "82900011", desc: "GLOVES PAIRED 7.5 STERILE", qty: 1, uom: "PR", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "82900010", desc: "GLOVES PAIRED 6.5 STERILE", qty: 2, uom: "PR", cart: ["Neonatal"], drawer: "0 - Intubation Kit" },
-    { code: "23003347", desc: "Laryngoscope batteries AA (extra)", qty: 2, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "34040379", desc: "Laryngoscope bulb #4 WA", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "23000106", desc: "Penlight", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-    { code: "23003355", desc: "Penlight batteries AAA", qty: 2, uom: "PC", cart: ["Combined", "Adult"], drawer: "0 - Intubation Kit" },
-
-    // --- DRAWER 1 (MEDICATIONS) ---
-    { code: "42964311", desc: "ATROPINE (HIZON) 1 MG/1 ML AMP", qty: 5, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42422511", desc: "ISOKET 10 MG/10 ML (1MG/ML) AMP", qty: 1, uom: "AMP", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "44004351", desc: "NSS (EURO-MED) 50 ML VIAL", qty: 2, uom: "VL", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "44000038", desc: "SOD. BICARBONATE 8.4%(ATLANTIC) 50ML AMP", qty: 3, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "48840022", desc: "CALCIUM GLUCONATE (EURO-MED) 10%", qty: 1, uom: "VL", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42410008", desc: "CORDARONE 150 MG/3 ML (50 MG/ML) AMP", qty: 3, uom: "AMP", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "44005141", desc: "DEXTROSE 50% (EURO-MED) 50 ML VIAL", qty: 1, uom: "VL", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42460044", desc: "DOBUzef 250 MG/5 ML (50 MG/ML) AMP", qty: 3, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42410050", desc: "DOPamax 200MG/5ML(40MG/ML) AMP 5'S", qty: 3, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42410030", desc: "ADRENALINE (EPINEPHrine) 1MG/ML", qty: 20, uom: "AMP", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "42410030", desc: "ADRENALINE (EPINEPHrine) 1MG/ML", qty: 10, uom: "AMP", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42460021", desc: "LEVOPHED SF (SULFITE-FREE) 4 MG/4 ML", qty: 4, uom: "AMP", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "43817013", desc: "LIDOCAINE 2% (ELIN) 1,000 MG/50 ML", qty: 1, uom: "VL", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "42890011", desc: "magnesium SULFATE (HIZON) 2,500 MG/10 ML", qty: 1, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42870004", desc: "DORMICUM 5 MG/1 ML AMP", qty: 1, uom: "AMP", cart: ["Combined", "Adult", "Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42851614", desc: "VaLIUM 10 MG/2 ML (5 MG/ML) AMP", qty: 3, uom: "AMP", cart: ["Combined", "Adult"], drawer: "Drawer 1 - Medications" },
-    { code: "42851614", desc: "VaLIUM 10 MG/2 ML (5 MG/ML) AMP", qty: 6, uom: "AMP", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "49798562", desc: "AMINOSOL 250MG/10ML AMP", qty: 3, uom: "AMP", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42452010", desc: "LASIX 20MG AMP", qty: 1, uom: "AMP", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "46832414", desc: "Solu-CORTEF 100MG A-O-V VIAL", qty: 3, uom: "VL", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42894339", desc: "KEPPRA 100MG/ML X 5ML VIAL", qty: 1, uom: "VL", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "43010032", desc: "NALOCURE 400MCG VIAL", qty: 2, uom: "VL", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "44004350", desc: "STERILE WATER 50ML FOR INJ.", qty: 1, uom: "VL", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-    { code: "42824897", desc: "MORPHINE SULFATE (DBL) 10MG AMP", qty: 1, uom: "AMP", cart: ["Neonatal"], drawer: "Drawer 1 - Medications" },
-
-    // --- DRAWER 2 (AIRWAY & MEDICAL SUPPLIES) ---
-    { code: "80200008", desc: "AIRWAY NASAL SIZE 7.0 FR. 28", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "Drawer 2 - Airway" },
-    { code: "80200010", desc: "AIRWAY NASAL SIZE 7.5 FR. 30", qty: 1, uom: "PC", cart: ["Combined", "Adult"], drawer: "Drawer 2 - Airway" },
-    { code: "80200012", desc: "AIRWAY ORAL SIZE 1.0 BLUE", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "80200000", desc: "AIRWAY ORAL SIZE 2.0 BLACK", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "83401012", desc: "ANESTHESIA MASK SIZE 1 NEONATE", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "83401007", desc: "ANESTHESIA MASK SIZE 2 INFANT", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "83401013", desc: "ANESTHESIA MASK SIZE 3 TODDLER", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "81800026", desc: "CATHETER SUCTION FR. 10 X 51CM", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "81801032", desc: "CATHETER SUCTION FR. 5 X 50CM", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "81800012", desc: "CATHETER SUCTION FR. 8 X 53CM", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "82700095", desc: "ECG ELECTRODES PEDIA 25/PAC", qty: 10, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86000143", desc: "ENDO TUBE STANDARD SIZE 2.0", qty: 2, uom: "PC", cart: ["Combined", "Neonatal"], drawer: "Drawer 2 - Airway" },
-    { code: "86000051", desc: "ENDO TUBE STANDARD SIZE 2.5", qty: 2, uom: "PC", cart: ["Combined", "Neonatal"], drawer: "Drawer 2 - Airway" },
-    { code: "86000144", desc: "ENDO TUBE STANDARD SIZE 3.0", qty: 2, uom: "PC", cart: ["Combined", "Neonatal"], drawer: "Drawer 2 - Airway" },
-    { code: "86000042", desc: "ENDO TUBE STANDARD SIZE 4.0", qty: 2, uom: "PC", cart: ["Combined", "Neonatal"], drawer: "Drawer 2 - Airway" },
-    { code: "86001033", desc: "ENDO TUBE STANDARD SIZE 4.5", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86000091", desc: "ENDO TUBE STANDARD SIZE 5.0", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86001028", desc: "ENDO TUBE STANDARD SIZE 5.5", qty: 2, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86000004", desc: "FEEDING TUBE FR. 5 X 40CM", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86000003", desc: "FEEDING TUBE FR. 8 X 40CM", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "86000010", desc: "INTUBATING STYLET PEDIA", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "81400008", desc: "NASAL OXYGEN CANNULA PEDIA", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "83400005", desc: "OXYGEN MASK PEDIA W/ RESERVOIR BAG", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "84700002", desc: "PLASTER LEUKOPLAST 2\" X 5 METERS", qty: 1, uom: "RL", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "84701004", desc: "PLASTER MICROPORE 1/2\" X 10 YARDS", qty: 1, uom: "RL", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
-    { code: "85701002", desc: "SYRINGE 5CC W/ NEEDLE LUER LOCK", qty: 1, uom: "PC", cart: ["Combined"], drawer: "Drawer 2 - Airway" },
+    // --- FIRST DRAWER: MEDICATIONS ---
+    { code: "42964311", desc: "ATROPINE (HIZON) 1 MG/1 ML AMP", cost: 82.60, uom: "AMP", cartQty: { "Combined": 5, "Adult": 5, "Neonatal": 2 }, drawer: "Drawer 1 - Medications" },
+    { code: "42422511", desc: "ISOKET 10 MG/10 ML (1MG/ML) AMP", cost: 408.00, uom: "AMP", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "44004351", desc: "NSS (EURO-MED) 50 ML VIAL", cost: 33.47, uom: "VL", cartQty: { "Combined": 2, "Adult": 2, "Neonatal": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "44000038", desc: "SOD. BICARBONATE 8.4%(ATLANTIC) 50ML", cost: 200.00, uom: "AMP", cartQty: { "Combined": 3, "Adult": 3, "Neonatal": 9 }, drawer: "Drawer 1 - Medications" },
+    { code: "48840022", desc: "CALCIUM GLUCONATE (EURO-MED) 10%", cost: 26.18, uom: "VL", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 2 }, drawer: "Drawer 1 - Medications" },
+    { code: "42410008", desc: "CORDARONE 150 MG/3 ML (50 MG/ML) AMP", cost: 376.22, uom: "AMP", cartQty: { "Combined": 3, "Adult": 3 }, drawer: "Drawer 1 - Medications" },
+    { code: "44005141", desc: "DEXTROSE 50% (EURO-MED) 50 ML VIAL", cost: 45.50, uom: "VL", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 2 }, drawer: "Drawer 1 - Medications" },
+    { code: "42460044", desc: "DOBUzef 250 MG/5 ML (50 MG/ML) AMP", cost: 450.14, uom: "AMP", cartQty: { "Combined": 3, "Adult": 3, "Neonatal": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "42410050", desc: "DOPamax 200MG/5ML(40MG/ML) AMP 5'S", cost: 170.52, uom: "AMP", cartQty: { "Combined": 3, "Adult": 3, "Neonatal": 2 }, drawer: "Drawer 1 - Medications" },
+    { code: "42410030", desc: "ADRENALINE (EPINEPHrine) 1MG/ML", cost: 100.96, uom: "AMP", cartQty: { "Combined": 20, "Adult": 20, "Neonatal": 10 }, drawer: "Drawer 1 - Medications" },
+    { code: "42460021", desc: "LEVOPHED SF 4 MG/4 ML (1 MG/ML) AMP", cost: 690.28, uom: "AMP", cartQty: { "Combined": 4, "Adult": 4 }, drawer: "Drawer 1 - Medications" },
+    { code: "43817013", desc: "LIDOCAINE 2% (ELIN) 1,000 MG/50 ML", cost: 199.26, uom: "VL", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "42890011", desc: "magnesium SULFATE (HIZON) 2,500 MG", cost: 116.40, uom: "AMP", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "42870004", desc: "DORMICUM 5 MG/1 ML AMP", cost: 96.95, uom: "AMP", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 1 }, drawer: "Drawer 1 - Medications" },
+    { code: "42851614", desc: "VaLIUM 10 MG/2 ML (5 MG/ML) AMP", cost: 81.41, uom: "AMP", cartQty: { "Combined": 3, "Adult": 3, "Neonatal": 6 }, drawer: "Drawer 1 - Medications" },
+    { code: "49798562", desc: "AMINOSOL 250MG/10ML AMP", cost: 17.44, uom: "AMP", cartQty: { "Neonatal": 3 }, drawer: "Drawer 1 - Medications" },
+    { code: "46832414", desc: "Solu-CORTEF 100MG A-O-V VIAL", cost: 329.46, uom: "VL", cartQty: { "Neonatal": 3 }, drawer: "Drawer 1 - Medications" },
+    { code: "42894339", desc: "KEPPRA 100MG/ML X 5ML VIAL", cost: 2896.59, uom: "VL", cartQty: { "Neonatal": 1 }, drawer: "Drawer 1 - Medications" },
     
-    // --- ADULT & NEONATAL CART SPECIFIC DRAWER 2 (IV & PROCEDURAL) ---
-    { code: "48459921", desc: "BD ALCOHOL SWAB 70% ALCOHOL WIPES 100'S", qty: 20, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83300014", desc: "CLAVE TRI-FUSE EXTENSION SET", qty: 2, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "82300001", desc: "COTTON BALLS STERILE 6'S", qty: 5, uom: "PAC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "82700096", desc: "2560 ELECTRODES ADULT RED DOT 50/PAC", qty: 10, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "84300048", desc: "ECG PAPER DEFIBRILLATOR - PHILIPS", qty: 1, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83900134", desc: "I.V. START PACK", qty: 2, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "86701092", desc: "INFUSION PUMP SET 2-CLAVE", qty: 2, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83900200", desc: "IV CATH AUTOGUARD G-18", qty: 5, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83900202", desc: "IV CATH AUTOGUARD G-20", qty: 5, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83900204", desc: "IV CATH AUTOGUARD G-22", qty: 5, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83900208", desc: "IV CATH AUTOGUARD G-24", qty: 5, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "86701094", desc: "MACROSET HOSPIRA LUER-LOCK", qty: 2, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "84701005", desc: "PLASTER MICROPORE 1\" X 10 YARDS", qty: 1, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "84701006", desc: "PLASTER MICROPORE 2\" X 10 YARDS", qty: 1, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "83300008", desc: "STOPCOCK 3-WAY LUER-LOCK CONNECTA BD", qty: 3, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701003", desc: "SYRINGE 10CC W/ NEEDLE LUER LOCK", qty: 5, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701018", desc: "SYRINGE 1CC TUBERCULINE W/ NEEDLE", qty: 5, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701001", desc: "SYRINGE 3.0CC W/ NEEDLE LUER LOCK", qty: 5, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701005", desc: "SYRINGE 30CC LUER LOCK", qty: 2, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701033", desc: "SYRINGE 50/60CC LUERLOCK", qty: 2, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "85701028", desc: "SYRINGE PF SALINE FLUSH 10ML UNIMEX", qty: 10, uom: "PC", cart: ["Adult"], drawer: "Drawer 2 - Medical Supplies" },
-    { code: "81400002", desc: "WITHDRAWAL CANNULA", qty: 2, uom: "PC", cart: ["Adult", "Neonatal"], drawer: "Drawer 2 - Medical Supplies" }
+    // --- INTUBATION KIT ---
+    { code: "80500026", desc: "AMBUBAG ADULT", cost: 2340.19, uom: "PC", cartQty: { "Combined": 1, "Adult": 1 }, drawer: "0 - Intubation Kit" },
+    { code: "80500028", desc: "AMBUBAG NEONATE", cost: 947.79, uom: "PC", cartQty: { "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
+    { code: "87500013", desc: "BACTERIA FILTER BARRIERBAC", cost: 190.49, uom: "PC", cartQty: { "Combined": 2, "Adult": 2 }, drawer: "0 - Intubation Kit" },
+    { code: "43817009", desc: "XYLOCAINE 10% PUMP SPRAY 50ML", cost: 2725.92, uom: "BOT", cartQty: { "Combined": 1, "Adult": 1, "Neonatal": 1 }, drawer: "0 - Intubation Kit" },
+    { code: "84300015", desc: "LUBRISAFE LUBRICATING JELLY 10 GM", cost: 6.00, uom: "PC", cartQty: { "Combined": 2, "Adult": 2, "Neonatal": 1 }, drawer: "0 - Intubation Kit" }
   ];
 
   const uomDictionary = { "AMP": "Ampoule", "VL": "Vial", "PC": "Piece", "PAC": "Pack", "RL": "Roll", "TUB": "Tube", "BOX": "Box", "BOT": "Bottle", "PR": "Pair", "PAD": "Pad", "VSET": "Set" };
   const resultsContainer = document.getElementById('resultsContainer');
+  const footerContainer = document.getElementById('auditFooter');
 
   window.onload = function() {
     renderInspectorChecklist('Combined');
@@ -296,7 +145,7 @@
         <div class="controls-row">
           <div>
             <h2 style="margin:0; color:#333;">Smart Audit Checklist</h2>
-            <p style="margin:5px 0 0; color:#666; font-size:14px;">Type the Actual QTY and Date. Status will auto-calculate!</p>
+            <p style="margin:5px 0 0; color:#666; font-size:14px;">Total costs calculate automatically when QTY is entered.</p>
           </div>
           <div style="display: flex; gap: 10px; align-items: center;">
             <select id="cartSelector" onchange="renderInspectorChecklist(this.value)" style="padding: 10px; border-radius: 6px; border: 2px solid #1a365d; font-size: 16px; font-weight: bold;">
@@ -308,21 +157,12 @@
             <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
           </div>
         </div>
-        
-        <div class="legend-row">
-          <div class="legend-item" style="background: #ffffff;">✅ Present</div>
-          <div class="legend-item" style="background: #f8d7da; color: #721c24;">❌ Lacking</div>
-          <div class="legend-item" style="background: #fff3cd; color: #856404;">⚠️ Expired</div>
-          <div class="legend-item" style="background: #fad7a1; color: #8a6d3b;">🛠️ Damaged</div>
-          <div class="legend-item" style="background: #cce5ff; color: #004085;">📥 For Turn In</div>
-          <div class="legend-item" style="background: #d6d8db; color: #383d41;">⛔ Not Able to Turn In</div>
-          <div class="legend-item" style="background: #e2d9f3; color: #4a235a;">🏷️ Unlabelled</div>
-          <div class="legend-item" style="background: #d4edda; color: #155724;">➕ Excess</div>
-        </div>
       </div>
     `;
 
-    const cartItems = inventory.filter(item => item.cart && item.cart.includes(selectedCart));
+    // Filter items that exist in the selected cart's dictionary
+    const cartItems = inventory.filter(item => item.cartQty && item.cartQty[selectedCart]);
+    
     const groupedByDrawer = cartItems.reduce((acc, item) => {
       let drawerName = item.drawer || "Unassigned Items";
       if (!acc[drawerName]) acc[drawerName] = [];
@@ -338,10 +178,12 @@
         <div class="inspector-drawer-title">📁 ${drawer}</div>
         <table class="inspector-table" id="table-${drawer.replace(/\s+/g, '-')}">
           <tr>
-            <th style="width: 155px;">Audit Status</th>
-            <th style="width: 70px; text-align: center;">Exp. QTY</th>
-            <th style="width: 80px; text-align: center;">Act. QTY</th>
-            <th style="width: 130px;">Expiry Date</th>
+            <th style="width: 140px;">Audit Status</th>
+            <th style="width: 60px; text-align: center;">Exp Qty</th>
+            <th style="width: 70px; text-align: center;">Act Qty</th>
+            <th style="width: 85px;">Unit Cost</th>
+            <th style="width: 95px;">Total Cost</th>
+            <th style="width: 120px;">Expiry Date</th>
             <th>Item Code</th>
             <th>Description</th>
             <th>UOM</th>
@@ -349,8 +191,11 @@
       `;
       items.forEach(item => {
         const fullUomName = uomDictionary[item.uom] || item.uom;
+        const expectedQty = item.cartQty[selectedCart];
+        const unitCost = item.cost ? item.cost.toFixed(2) : "0.00";
+
         html += `
-          <tr class="row-present data-row" data-expected="${item.qty}">
+          <tr class="row-present data-row" data-expected="${expectedQty}" data-cost="${unitCost}">
             <td>
               <select class="status-select" onchange="manualColorOverride(this)">
                 <option value="Present">✅ Present</option>
@@ -358,19 +203,19 @@
                 <option value="Expired">⚠️ Expired</option>
                 <option value="Damaged">🛠️ Damaged</option>
                 <option value="For Turn In">📥 For Turn In</option>
-                <option value="Not Able to Turn In">⛔ Not Able to Turn In</option>
+                <option value="Not Able to Turn In">⛔ Not Able</option>
                 <option value="Unlabelled">🏷️ Unlabelled</option>
                 <option value="Excess">➕ Excess</option>
               </select>
             </td>
+            <td style="text-align: center;"><span class="expected-qty-badge">${expectedQty}</span></td>
             <td style="text-align: center;">
-              <span class="expected-qty-badge">${item.qty}</span>
+              <input type="number" class="input-field qty-input" min="0" placeholder="Qty" style="width: 50px;" oninput="autoCalculateStatus(this)">
             </td>
-            <td style="text-align: center;">
-              <input type="number" class="input-field qty-input" min="0" placeholder="Qty" style="width: 60px;" oninput="autoCalculateStatus(this)">
-            </td>
+            <td style="color: #666;">₱${unitCost}</td>
+            <td class="total-cost-cell" style="font-weight: bold; color: #1a365d;">₱0.00</td>
             <td>
-              <input type="date" class="input-field expiry-input" style="width: 110px;" oninput="autoCalculateStatus(this)">
+              <input type="date" class="input-field expiry-input" style="width: 105px;" oninput="autoCalculateStatus(this)">
             </td>
             <td class="code-cell"><strong>${item.code}</strong></td>
             <td class="desc-cell">${item.desc}</td>
@@ -382,16 +227,26 @@
     });
 
     resultsContainer.innerHTML = html;
+    
+    // Make sure the footer displays properly
+    document.getElementById('auditFooter').style.display = 'block';
   }
 
-  // --- SMART AUTOMATION LOGIC ---
+  // --- SMART AUTOMATION & COST CALCULATION LOGIC ---
   function autoCalculateStatus(element) {
     const tr = element.closest('tr');
     const select = tr.querySelector('.status-select');
     const actualQtyStr = tr.querySelector('.qty-input').value;
     const expiryStr = tr.querySelector('.expiry-input').value;
     const expectedQty = parseInt(tr.dataset.expected) || 0;
+    const unitCost = parseFloat(tr.dataset.cost) || 0;
+    const totalCostCell = tr.querySelector('.total-cost-cell');
     
+    // Update Total Cost
+    const actualQty = parseInt(actualQtyStr) || 0;
+    totalCostCell.innerText = "₱" + (unitCost * actualQty).toFixed(2);
+    
+    // Status Logic
     const currentStatus = select.value;
     if (["Damaged", "For Turn In", "Not Able to Turn In", "Unlabelled"].includes(currentStatus) && element.classList.contains('qty-input')) {
       return; 
@@ -409,7 +264,6 @@
     }
 
     if (calculatedStatus !== "Expired" && actualQtyStr !== "") {
-      const actualQty = parseInt(actualQtyStr);
       if (actualQty < expectedQty) {
         calculatedStatus = "Lacking";
       } else if (actualQty > expectedQty) {
@@ -425,7 +279,6 @@
   function manualColorOverride(selectElement) {
     const tr = selectElement.closest('tr');
     const status = selectElement.value;
-    
     tr.classList.remove('row-present', 'row-lacking', 'row-expired', 'row-damaged', 'row-turnin', 'row-notable', 'row-unlabelled', 'row-excess');
     
     if (status === 'Present') tr.classList.add('row-present');
@@ -445,19 +298,21 @@
     const time = new Date().toLocaleTimeString();
     
     csvContent += `E-Cart Audit Report\nCart Type: ${cartType}\nDate: ${date} ${time}\n\n`;
-    csvContent += "Drawer,Audit Status,Expected QTY,Actual QTY,Expiry Date,Item Code,Description,UOM\n";
+    csvContent += "Drawer,Audit Status,Expected QTY,Actual QTY,Unit Cost,Total Cost,Expiry Date,Item Code,Description,UOM\n";
 
     rows.forEach(row => {
       const drawerTitle = row.closest('table').previousElementSibling.innerText.replace('📁 ', '');
       const status = row.querySelector('.status-select').value;
       const expectedQty = row.dataset.expected;
       const actualQty = row.querySelector('.qty-input').value || "0";
+      const unitCost = row.dataset.cost;
+      const totalCost = (parseFloat(unitCost) * (parseInt(actualQty) || 0)).toFixed(2);
       const expiry = row.querySelector('.expiry-input').value || "N/A";
       const code = row.querySelector('.code-cell').innerText;
       const desc = `"${row.querySelector('.desc-cell').innerText}"`; 
       const uom = row.querySelector('.uom-cell').innerText;
 
-      csvContent += `${drawerTitle},${status},${expectedQty},${actualQty},${expiry},${code},${desc},${uom}\n`;
+      csvContent += `${drawerTitle},${status},${expectedQty},${actualQty},₱${unitCost},₱${totalCost},${expiry},${code},${desc},${uom}\n`;
     });
 
     const encodedUri = encodeURI(csvContent);
@@ -470,6 +325,4 @@
   }
 </script>
 </body>
-
-  
 </html>
