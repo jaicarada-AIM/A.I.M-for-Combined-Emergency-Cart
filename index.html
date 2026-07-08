@@ -232,6 +232,7 @@
 </head>
 <body>
 
+<!-- THE SECRET TRACKER SCREEN -->
 <div id="aimTrackerOverlay">
   <div class="tracker-box">
     <h2 class="tracker-title">A.I.M. System</h2>
@@ -275,7 +276,7 @@
 </div>
 
 <script>
-  // --- TRACKER FUNCTION (SENDS TO ST. LUKE'S GOOGLE SHEET) ---
+  // --- TRACKER FUNCTION (SENDS TO GOOGLE SHEET) ---
   function unlockAIM() {
     const unitName = document.getElementById('trackerUnitName').value.trim();
     
@@ -288,15 +289,14 @@
     btn.innerText = "Logging in...";
     btn.style.backgroundColor = "#666";
 
-    // Replaces the old Prompt popup and adds the personalized welcome message!
     document.getElementById('dynamicSubtitle').innerHTML = `Accurate Items Mapping <br><span style="color: #ffd54f; font-size: 24px;">Combined Emergency Cart</span><br><span style="color:white; font-size: 22px; display:inline-block; margin-top:10px;">Welcome, ${unitName} Team!</span>`;
 
-    // Official St. Luke's Tracking URL
-    const scriptURL = "https://script.google.com/a/macros/stlukes.com.ph/s/AKfycbyCQpPPgf1TuHCtiEbjL2exQqm9kpk4L4Zal0rgSfRtdp2FSuU-sC53pFhKIZHPrSUr/exec";
+    // YOUR NEW WORKING PERSONAL GMAIL LINK
+    const scriptURL = "https://script.google.com/macros/s/AKfycbws_91AicYdt_xFcWfipXDjSutfj_9ho5kpuMOejK6tQMvQD27VfEUTX__GWcMWM8n9/exec";
     
     const formData = new FormData();
     formData.append("unitName", unitName);
-    formData.append("cartType", "Accurate Items Mapping (Main Tool)"); 
+    formData.append("cartType", "Accurate Items Mapping"); 
 
     // Send data to Google Sheets, hide overlay, and show the app
     fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
